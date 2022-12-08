@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
       ctrl.vm.network "private_network", ip: "192.168.56.2", bridge: "eth0: Wi-Fi"
       ctrl.vm.provider "virtualbox" do |v|
         v.memory = 2048
-        v.cpus = 4
+        v.cpus = 3
         v.name = "k8s"
       end
       # ctrl.vm.provision "shell", path: "./provisioning/get-docker.sh"
