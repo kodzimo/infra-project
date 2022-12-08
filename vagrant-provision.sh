@@ -16,7 +16,7 @@ systemctl start docker
 sleep 3
 
 # Docker configuration
-sudo usermod -aG docker vagrant
+usermod -aG docker vagrant
 newgrp docker
 
 systemctl enable docker.service
@@ -25,6 +25,7 @@ systemctl enable containerd.service
 # kubectl installation
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 install -o root -g root -m 0755 kubectl /usr/bin/kubectl
+rm -f /home/vagrant/kubectl
 
 yum install -y bash-completion
 echo "source /usr/share/bash-completion/bash_completion" >> ~/.bashrc
@@ -38,4 +39,5 @@ chmod +x ./kind
 mv ./kind /usr/bin/kind
 
 # Kind cluster creation
-kind create cluster --config /vagrant/k8s/kind-ingress-config.yaml
+runuser -l  vagrant -c 'kind create cluster --config /vagrant/k8s/kind-ingress-config.yaml'
+runuser -l  vagrant -c 'kubectl cluster-info --context kind-kind'
