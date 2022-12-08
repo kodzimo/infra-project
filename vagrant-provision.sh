@@ -19,14 +19,14 @@ sleep 3
 sudo usermod -aG docker vagrant
 newgrp docker
 
-sudo systemctl enable docker.service
-sudo systemctl enable containerd.service
+systemctl enable docker.service
+systemctl enable containerd.service
 
 # kubectl installation
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 install -o root -g root -m 0755 kubectl /usr/bin/kubectl
 
-yum install bash-completion
+yum install -y bash-completion
 echo "source /usr/share/bash-completion/bash_completion" >> ~/.bashrc
 # shellcheck source=/dev/null
 source /usr/share/bash-completion/bash_completion
