@@ -16,6 +16,8 @@
 
 !!! Do not run yum update so syncing folder won't be corrupted
 
+* Repository https://github.com/kodzimo/getting-started.git must be forked into your own repo and cloned locally to have ability to make changes to it.
+
 * "vagrant up" command must be executed to enroll infrastructure
 
 ## Using Docker Compose
@@ -26,9 +28,18 @@
 
        echo ""$CR_PAT"" | docker login ghcr.io -u [your-username] --password-stdin
 
+### Eventually
+
+We are having infrustructure like this:
+1. Vagrant host with Docker enrolled
+2. Docker compose set's up services (containers):
+- Jenkins with built-in docker
+- Zabbix Server MySQL
+- Zabbix Server
+- Zabbix Server Web Interface
+
 ## Using Kubernetes (kind)
 
 !!! Unfortunately, this option is in development state.
 
 * Field under the "Config for Kubernetes (kind)" line must be uncommented in Vagrantfile
-
