@@ -16,7 +16,7 @@
 
 !!! Do not run yum update so syncing folder won't be corrupted
 
-* Repository https://github.com/kodzimo/getting-started.git must be forked into your own repo and cloned locally to have ability to make changes to it.
+* Repository https://github.com/kodzimo/getting-started.git must be forked into your own repo and cloned locally to have ability to make changes to it. This is the fork of https://github.com/docker/getting-started.git - you can read about it right there.
 
 * "vagrant up" command must be executed to enroll infrastructure
 
