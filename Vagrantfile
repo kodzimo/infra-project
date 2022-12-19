@@ -1,8 +1,8 @@
 Vagrant.configure("2") do |config|
     config.vm.provision "file", source: "~/.ssh/id_ed25519.pub", destination: "~/.ssh/id_ed25519.pub"
     config.vm.provision "shell", inline: "cat /home/vagrant/.ssh/id_ed25519.pub >> /home/vagrant/.ssh/authorized_keys" 
-    # config.vm.provision "file", source: "~/.ssh/id_ed25519", destination: "~/.ssh/id_ed25519"
     
+    # Config for Docker Compose
     config.vm.define "k8s" do |ctrl|
       ctrl.vm.box = "bento/centos-7"
       ctrl.vm.hostname = "k8s"
@@ -15,8 +15,19 @@ Vagrant.configure("2") do |config|
         v.name = "k8s"
       end
       # Basic provisioning
-      ctrl.vm.provision "shell", path: "./vagrant-provision.sh"
-      # Jenkins enrollinh
-      ctrl.vm.provision "shell", path: "./jenkins-install.sh"
+      ctrl.vm.provision "shell", path: "./vagrant-compose-centos.sh"
     end
+
+    # Config for Kubernetes (kind)
+    # config.vm.define "k8s" do |ctrl|
+    #   ctrl.vm.box = "bento/centos-7"
+    #   ctrl.vm.hostname = "k8s"
+    #   ctrl.vm.network "private_network", ip: "192.168.56.2", bridge: "eth0: Wi-Fi"
+    #   ctrl.vm.provider "virtualbox" do |v|
+    #     v.memory = 4096
+    #     v.cpus = 8
+    #     v.name = "k8s"
+    #   end
+    #   ctrl.vm.provision "shell", path: "./vagrant-k8s.sh"
+    # end
 end

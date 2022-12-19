@@ -54,32 +54,32 @@ metadata:
 provisioner: kubernetes.io/no-provisioner
 volumeBindingMode: WaitForFirstConsumer
 ---
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: jenkins-pv-volume
-  labels:
-    type: local
-spec:
-  storageClassName: local-storage
-  claimRef:
-    name: jenkins-pv-claim
-    namespace: devops-tools
-  capacity:
-    storage: 10Gi
-  accessModes:
-    - ReadWriteOnce
-  local:
-    path: /data/jenkins-volume
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/hostname
-          operator: In
-          values:
-          - kind-control-plane
----
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: jenkins-pv-volume
+#   labels:
+#     type: local
+# spec:
+#   storageClassName: local-storage
+#   claimRef:
+#     name: jenkins-pv-claim
+#     namespace: devops-tools
+#   capacity:
+#     storage: 10Gi
+#   accessModes:
+#     - ReadWriteOnce
+#   local:
+#     path: /data/jenkins-volume
+#   nodeAffinity:
+#     required:
+#       nodeSelectorTerms:
+#       - matchExpressions:
+#         - key: kubernetes.io/hostname
+#           operator: In
+#           values:
+#           - kind-control-plane
+# ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -150,12 +150,22 @@ spec:
           volumeMounts:
             - name: jenkins-data
               mountPath: /var/jenkins_home
+            - name: dockersock
+              mountPath: /var/run/docker.sock
       imagePullSecrets:
         - name: dockerconfigjson
       volumes:
         - name: jenkins-data
           persistentVolumeClaim:
-              claimName: jenkins-pv-claim
+            claimName: jenkins-pv-claim
+        - name: dockersock
+          hostPath:
+            # accessMode: readOnly 
+            # directory location on host
+            path: /var/run/docker.sock
+            # this field is optional
+            type: Socket
+            # mountPath: /var/Jenkinsfile
 ---
 # apiVersion: networking.k8s.io/v1
 # kind: Ingress

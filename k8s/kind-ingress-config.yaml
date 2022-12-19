@@ -35,5 +35,9 @@ nodes:
     hostPort: 55443
     protocol: TCP
     listenAddress: 192.168.56.2
+  extraMounts:
+  - hostPath: /var/run/docker.sock
+    containerPath: /var/run/docker.sock
+    readOnly: true
 # ---
     
